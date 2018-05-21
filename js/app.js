@@ -37,6 +37,67 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+var cards=[
+  {
+    rank: "udacity1",
+    suit: "u",
+    cardImage: "img/udacity.jpeg"
+  },
+
+  {
+    rank: "udacity2",
+    suit: "u2",
+    cardImage: "img/udacityOr.jpeg"
+  },
+
+  {
+    rank: "dog",
+    suit: "aussie",
+    cardImage: "img/aussie.jpg"
+  },
+
+  {
+    rank: "ice-cream",
+    suit: "sweet",
+    cardImage: "img/ice-cream.png"
+  },
+
+  {
+    rank: "jquery",
+    suit: "jq",
+    cardImage: "img/jquery.png"
+  },
+
+  {
+    rank: "javascript",
+    suit: "js",
+    cardImage: "img/js.jpg"
+  },
+
+  {
+    rank: "node",
+    suit: "nd",
+    cardImage: "img/node.jpeg"
+  },
+
+  {
+    rank: "react",
+    suit: "rc",
+    cardImage: "img/react.png"
+  }
+];
+
+var cardsInPlay = [];
+var gameScore = 0;
+var checkForMatch= function(){
+  if(cardsInPlay[0] === cardsInPlay[1]){
+    alert("Match!");
+    gameScore++;
+    document.getElementById("trackScore").innerHTML = gameScore;
+  }else{
+    alert("Try again!");
+  }
+}
 
  var resetGame= document.getElementById("repeat");
  resetGame.addEventListener("click", restart);
