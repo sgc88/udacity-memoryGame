@@ -45,20 +45,24 @@ var cards = document.querySelectorAll('.card');
 var openCards = [];
 cards.forEach(function(card){
   card.addEventListener('click', function(e){
+    if(!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
+      if(openCards.length >= 2){
+        setTimeout (function(){
+          openCards.forEach(function(card){
 
+            card.classList.remove('open', 'show');
 
-    if(openCards.length >= 2){
-      setTimeout (function(){
-        openCards.forEach(function(card){
-
-          card.classList.remove('open', 'show');
-
-        });
-        openCards.length = 0;
-      }, 100);
+          });
+          openCards.length = 0;
+        }, 100);
+      }else{
+        openCards.push(card);
+        card.classList.add('open', 'show');
+      }
     }else{
-      openCards.push(card);
-      card.classList.add('open', 'show');
+
     }
+
+
   })
 });
