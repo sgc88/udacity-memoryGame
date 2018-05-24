@@ -60,6 +60,8 @@ function generateCard(card){
      return generateCard(card);
    });
    deck.innerHTML = cardHTML.join('');
+   moves =0;
+
  }
  initGame();
 
@@ -71,6 +73,10 @@ function generateCard(card){
  // - if they dont match remove both cards from array and hide the symbols
 var cards = document.querySelectorAll('.card');
 var openCards = [];
+var movess = 3;
+var moveCounter = document.querySelector('.moves');
+
+
 
 cards.forEach(function(card){
   card.addEventListener('click', function(e){
@@ -87,19 +93,18 @@ cards.forEach(function(card){
           openCards[1].classList.add('match');
           openCards.length =[];
 
+
         }else{
-
-
           //if they dont macth hide
           setTimeout (function(){
             openCards.forEach(function(card){
-
               card.classList.remove('open', 'show');
-
             });
             openCards.length = 0;
           }, 100);
         }
+          moves += 1;
+          moveCounter.innerText = moves;
       }else{
         openCards.push(card);
         card.classList.add('open', 'show');
