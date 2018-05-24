@@ -11,7 +11,7 @@
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
+var shuffleCards = function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -25,8 +25,6 @@ function shuffle(array) {
     return array;
 }
 
-
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -37,71 +35,30 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-var cards=[
-  {
-    rank: "udacity1",
-    suit: "u",
-    cardImage: "img/udacity.jpeg"
-  },
 
-  {
-    rank: "udacity2",
-    suit: "u2",
-    cardImage: "img/udacityOr.jpeg"
-  },
+ //1- set up event listener for a card
+ //2- function that displays a card's symbol
+ //3- functions that add the card to a list of "open cards"
+ // -if the list already has another card check to see if two cards match
+ // - if they dont match remove both cards from array and hide the symbols
+var cards = document.querySelectorAll('.card');
+var openCards = [];
+cards.forEach(function(card){
+  card.addEventListener('click', function(e){
 
-  {
-    rank: "dog",
-    suit: "aussie",
-    cardImage: "img/aussie.jpg"
-  },
 
-  {
-    rank: "ice-cream",
-    suit: "sweet",
-    cardImage: "img/ice-cream.png"
-  },
+    if(openCards.length >= 2){
+      setTimeout (function(){
+        openCards.forEach(function(card){
 
-  {
-    rank: "jquery",
-    suit: "jq",
-    cardImage: "img/jquery.png"
-  },
+          card.classList.remove('open', 'show');
 
-  {
-    rank: "javascript",
-    suit: "js",
-    cardImage: "img/js.jpg"
-  },
-
-  {
-    rank: "node",
-    suit: "nd",
-    cardImage: "img/node.jpeg"
-  },
-
-  {
-    rank: "react",
-    suit: "rc",
-    cardImage: "img/react.png"
-  }
-];
-
-var cardsInPlay = [];
-var gameScore = 0;
-var checkForMatch= function(){
-  if(cardsInPlay[0] === cardsInPlay[1]){
-    alert("Match!");
-    gameScore++;
-    document.getElementById("trackScore").innerHTML = gameScore;
-  }else{
-    alert("Try again!");
-  }
-}
-
- var resetGame= document.getElementById("repeat");
- resetGame.addEventListener("click", restart);
-
- function restart() {
-     console.log("you clicked me");
- }
+        });
+        openCards.length = 0;
+      }, 100);
+    }else{
+      openCards.push(card);
+      card.classList.add('open', 'show');
+    }
+  })
+});
