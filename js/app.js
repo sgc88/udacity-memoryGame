@@ -11,7 +11,8 @@
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-var shuffleCards = function shuffle(array) {
+
+function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -23,8 +24,25 @@ var shuffleCards = function shuffle(array) {
     }
 
     return array;
-}
+};
 
+
+//
+// function shuffle(a) {
+//     var j, x, i;
+//     for (i = a.length - 1; i > 0; i--) {
+//         j = Math.floor(Math.random() * (i + 1));
+//         x = a[i];
+//         a[i] = a[j];
+//         a[j] = x;
+//     }
+//     return a;
+// }
+var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-anchor', 'fa-anchor', 'fa-leaf', 'fa-leaf', 'fa-bicycle', 'fa-bicycle'];
+
+function generateCard(card){
+  return `<li class="card" data-card=${card}><i class="fa ${card}"></i></li>`;
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -36,6 +54,16 @@ var shuffleCards = function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+ function initGame(){
+   var deck = document.querySelector('.deck');
+   var cardHTML = shuffle(cards).map(function(card){
+     return generateCard(card);
+   });
+   deck.innerHTML = cardHTML.join('');
+ }
+ initGame();
+
+
  //1- set up event listener for a card
  //2- function that displays a card's symbol
  //3- functions that add the card to a list of "open cards"
@@ -43,18 +71,35 @@ var shuffleCards = function shuffle(array) {
  // - if they dont match remove both cards from array and hide the symbols
 var cards = document.querySelectorAll('.card');
 var openCards = [];
+
 cards.forEach(function(card){
   card.addEventListener('click', function(e){
     if(!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
       if(openCards.length >= 2){
-        setTimeout (function(){
-          openCards.forEach(function(card){
+        if(openCards[0].dataset.card == openCards[1].dataset.card){
+          console.log("you found a match");
+          openCards[0].classList.add('show');
+          openCards[0].classList.add('open');
+          openCards[0].classList.add('match');
 
-            card.classList.remove('open', 'show');
+          openCards[1].classList.add('show');
+          openCards[1].classList.add('open');
+          openCards[1].classList.add('match');
+          openCards.length =[];
 
-          });
-          openCards.length = 0;
-        }, 100);
+        }else{
+
+
+          //if they dont macth hide
+          setTimeout (function(){
+            openCards.forEach(function(card){
+
+              card.classList.remove('open', 'show');
+
+            });
+            openCards.length = 0;
+          }, 100);
+        }
       }else{
         openCards.push(card);
         card.classList.add('open', 'show');
